@@ -271,3 +271,20 @@
 .swiper-button-prev {
   color: var(--primary);
 }
+
+/* Responsive safety net: prevent accidental horizontal clipping across public pages. */
+html, body, #root {
+  max-width: 100%;
+}
+body {
+  overflow-x: hidden;
+}
+img, video, svg {
+  max-width: 100%;
+}
+@media (max-width: 639px) {
+  .marquee-track {
+    gap: 2rem;
+    animation-duration: 24s;
+  }
+}

@@ -574,9 +574,9 @@ export function Navbar() {
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="overflow-hidden border-t border-border bg-card/95 xl:hidden"
+              className="max-h-[calc(100dvh-4.5rem)] overflow-y-auto overscroll-contain border-t border-border bg-card/95 xl:hidden"
             >
-              <ul className="container-x flex flex-col py-2">
+              <ul className="container-x flex min-h-0 flex-col py-2 pb-8">
                 {NAV_LINKS.map((link) => (
                   <Fragment key={link.to}>
                     <li>{renderMobileLink(link)}</li>

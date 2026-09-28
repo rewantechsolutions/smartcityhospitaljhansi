@@ -35,7 +35,7 @@ import { SectionHeading } from "./Common";
 export function StatsSection() {
   return (
     <section className="relative overflow-hidden gradient-brand py-12 text-navy-foreground">
-      <div className="container-x grid grid-cols-2 gap-8 lg:grid-cols-4">
+      <div className="container-x grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-5 lg:gap-6">
         {STATS.map((s, i) => (
           <Reveal key={s.label} delay={i * 0.08} className="text-center">
             <p className="text-3xl font-extrabold sm:text-4xl">
@@ -263,10 +263,10 @@ export function JourneySection() {
           <div className="absolute left-6 top-0 h-full w-px bg-border lg:left-0 lg:top-12 lg:h-px lg:w-full" aria-hidden="true" />
           <ol className="grid gap-8 lg:grid-cols-5">
             {JOURNEY.map((j, i) => (
-              <Reveal key={j.step} delay={i * 0.08}>
-                <li className="relative pl-16 lg:pl-0 lg:text-center">
-                  <span className="absolute left-0 top-0 grid h-12 w-12 place-items-center rounded-full gradient-primary text-primary-foreground shadow-lift lg:relative lg:mx-auto">
-                    <Icon name={j.icon} className="h-5 w-5" />
+              <Reveal key={j.step} delay={i * 0.08} className="min-w-0">
+                <li className="relative min-w-0 pl-16 lg:pl-0 lg:text-center">
+                  <span className="absolute left-0 top-0 grid h-12 w-12 place-items-center rounded-full gradient-primary text-primary-foreground shadow-lift lg:static lg:mx-auto lg:flex">
+                    <Icon name={j.icon} className="h-5 w-5 shrink-0" />
                   </span>
                   <p className="mt-0 text-xs font-bold uppercase tracking-wider text-cyan lg:mt-5">Step {i + 1}</p>
                   <h3 className="mt-1 text-lg font-semibold">{j.step}</h3>

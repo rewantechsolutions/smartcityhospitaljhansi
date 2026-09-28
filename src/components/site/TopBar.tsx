@@ -18,8 +18,8 @@ const announcements = [
 export function TopBar() {
   return (
     <div className="gradient-brand text-navy-foreground">
-      <div className="container-x flex flex-col gap-1.5 py-2 text-xs sm:text-[13px] lg:flex-row lg:items-center lg:justify-between">
-        <div className="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-1">
+      <div className="container-x flex items-center justify-between gap-2 py-2 text-xs sm:text-[13px]">
+        <div className="hidden min-w-0 flex-wrap items-center gap-x-4 gap-y-1 lg:flex">
           <a
             href={`tel:${HOSPITAL.ambulance}`}
             className="hidden items-center gap-1.5 hover:text-white sm:inline-flex"
@@ -36,7 +36,7 @@ export function TopBar() {
             <Clock className="h-3.5 w-3.5 shrink-0" /> {HOSPITAL.hours}
           </span>
         </div>
-        <div className="ml-auto flex shrink-0 items-center gap-3">
+        <div className="flex min-w-0 flex-1 items-center justify-between gap-2 lg:ml-auto lg:flex-none lg:shrink-0 lg:justify-start sm:gap-3">
           <div className="flex items-center gap-1">
             {socials.map(({ Icon, label, href }) => (
               <a
@@ -53,7 +53,7 @@ export function TopBar() {
           </div>
           <Link
             to="/patient-login"
-            className="inline-flex min-h-8 items-center gap-1.5 rounded-full border border-white/40 bg-white/15 px-3 py-1.5 text-[13px] font-semibold tracking-[0.3px] text-white transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-px hover:border-white hover:bg-white hover:text-[#0e8a73] hover:shadow-[0_4px_12px_rgba(0,0,0,0.12)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:px-4"
+            className="inline-flex min-h-8 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border border-white/40 bg-white/15 px-2.5 py-1.5 text-[12px] font-semibold tracking-[0.2px] text-white transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-px hover:border-white hover:bg-white hover:text-[#0e8a73] hover:shadow-[0_4px_12px_rgba(0,0,0,0.12)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:px-4 sm:text-[13px]"
           >
             <LogIn aria-hidden="true" className="h-3.5 w-3.5" />
             Patient Login
