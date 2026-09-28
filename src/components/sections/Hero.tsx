@@ -2,8 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { Ambulance, ArrowRight, BadgeCheck, Brain, HeartPulse, ShieldPlus, Video } from "lucide-react";
 import heroImg from "@/assets/hospital/main-day.png";
-import { Counter } from "@/components/site/motion-primitives";
-import { HOSPITAL, STATS } from "@/lib/site-data";
+import { HOSPITAL } from "@/lib/site-data";
 
 export function Hero() {
   return (
@@ -77,21 +76,7 @@ export function Hero() {
             </a>
           </motion.div>
 
-          <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
-            {STATS.map((s, i) => (
-              <motion.div
-                key={s.label}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 + i * 0.08 }}
-              >
-                <p className="text-xl font-extrabold text-primary sm:text-2xl">
-                  <Counter to={s.value} suffix={s.suffix} />
-                </p>
-                <p className="mt-1 text-xs text-muted-foreground sm:text-sm">{s.label}</p>
-              </motion.div>
-            ))}
-          </div>
+
         </div>
 
         <motion.div
