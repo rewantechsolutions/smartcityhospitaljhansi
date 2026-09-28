@@ -91,6 +91,10 @@ export const DOCTORS = [
   { name: "Dr. Aprajita Mishra", spec: "Orthodontics", qual: "BDS, MDS", initials: "AM" },
   { name: "Dr. Sumit", spec: "Gastroenterology", qual: "MBBS, MD, DM", initials: "DS" },
   { name: "Dr. Yash Jain", spec: "Orthopaedics", qual: "MBBS, MS, DNB", initials: "YJ" },
+  { name: "Dr. Prateek Shivhare", spec: "Dermatology", qual: "MBBS, MD", initials: "PS" },
+  { name: "Dr. Arijit Gaurav", spec: "Psychiatry", qual: "MBBS, DPM", initials: "AG" },
+  { name: "Dr. Abhishek Gupta", spec: "Ophthalmology", qual: "MBBS, MS", initials: "AG" },
+
 ];
 
 export const IMAGING_SERVICES = ["CT Scan", "X-Ray", "Ultrasound", "Mammography", "2D Echo", "ECG", "TMT"];
