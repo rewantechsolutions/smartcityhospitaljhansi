@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { Ambulance, ArrowRight, BadgeCheck, Brain, HeartPulse, ShieldPlus, Video } from "lucide-react";
-import heroImg from "@/assets/hospital/main-day.png";
+import heroImg from "@/assets/hospital/main-day.webp";
 import { HOSPITAL } from "@/lib/site-data";
 
 export function Hero() {

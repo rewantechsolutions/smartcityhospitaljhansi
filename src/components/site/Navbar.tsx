@@ -5,13 +5,11 @@ import {
   Baby,
   CalendarPlus,
   ChevronDown,
-  Clock3,
   HeartPulse,
   Menu,
   PhoneCall,
   ScanLine,
   ShieldCheck,
-  Siren,
   Stethoscope,
   X,
   type LucideIcon,
@@ -21,7 +19,8 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import logo from "@/assets/smartcity-logo.png";
 import { HOSPITAL, NAV_LINKS } from "@/lib/site-data";
 
-type MenuKey = "departments" | "services";
+type MenuKey = "about" | "departments" | "services";
+type MobileMenuKey = Exclude<MenuKey, "about">;
 type PageTarget = "/departments" | "/services";
 
 type MenuLinkData = {
@@ -229,51 +228,146 @@ function MenuGroups({
   );
 }
 
-function MenuAside({ menu, onNavigate }: { menu: MenuKey; onNavigate: () => void }) {
+const ABOUT_MENU_LINKS = [
+  { label: "Our Story & Vision", description: "Accessible & compassionate multi-speciality care", to: "/about" },
+  { label: "Leadership & Administration", description: "Meet our medical directors & admin team", to: "/about" },
+  { label: "Patient Journey", description: "A 5-step pathway from first call to recovery", to: "/about" },
+  { label: "Infrastructure & Facilities", description: "ICU, modular OTs & diagnostic units", to: "/about" },
+] as const;
+
+const DEPARTMENT_MENU_LINKS = [
+  "General Medicine",
+  "General & Laparoscopic Surgery",
+  "Surgical & Medical Gastroenterology",
+  "Obstetrics & Gynaecology",
+  "Paediatrics & Neonatology",
+  "Orthopaedics & Joint Replacement",
+  "Anaesthesiology & Critical Care",
+];
+
+const SERVICE_MENU_GROUPS = [
+  {
+    title: "Core Clinical",
+    to: "/services",
+    links: [
+      "24×7 Emergency & Trauma",
+      "Intensive Care Unit (ICU)",
+      "Operation Theatres",
+      "Inpatient & Outpatient Care",
+    ],
+  },
+  {
+    title: "Diagnostics & Patient Resources",
+    to: "/services",
+    links: [
+      "Advanced Diagnostics: CT Scan, Ultrasound, X-Ray, Mammography",
+      "Clinical Pathology Lab",
+      "In-House 24×7 Pharmacy",
+      "Ayushman Bharat TPA Desk",
+    ],
+  },
+] as const;
+
+function MegaMenuContent({ menu, onNavigate }: { menu: MenuKey; onNavigate: () => void }) {
+  if (menu === "about") {
+    return (
+      <div className="grid gap-5 sm:grid-cols-[minmax(0,1fr)_13rem]">
+        <div>
+          <p className="mb-2 text-xs font-bold uppercase text-emerald-700">About the hospital</p>
+          <div className="space-y-1">
+            {ABOUT_MENU_LINKS.map((item) => (
+              <Link
+                key={item.label}
+                to={item.to}
+                onClick={onNavigate}
+                className="group flex items-start justify-between gap-3 rounded-xl p-2.5 transition-colors hover:bg-emerald-50 focus-visible:bg-emerald-50"
+              >
+                <span>
+                  <span className="block text-sm font-semibold text-foreground">{item.label}</span>
+                  <span className="mt-0.5 block text-xs leading-relaxed text-muted-foreground">
+                    {item.description}
+                  </span>
+                </span>
+                <ArrowUpRight className="mt-0.5 h-4 w-4 shrink-0 text-emerald-700 opacity-0 transition-opacity group-hover:opacity-100" aria-hidden="true" />
+              </Link>
+            ))}
+          </div>
+        </div>
+        <aside className="flex flex-col rounded-xl bg-gradient-to-br from-emerald-600 to-teal-700 p-4 text-white">
+          <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-white/15 px-2.5 py-1 text-xs font-semibold">
+            <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" /> Established in 2025
+          </span>
+          <p className="mt-4 text-sm font-semibold">Here for your health, around the clock.</p>
+          <a
+            href={`tel:${HOSPITAL.emergency.replace(/\s/g, "")}`}
+            onClick={onNavigate}
+            className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-white/95 hover:text-white"
+          >
+            <PhoneCall className="h-4 w-4" aria-hidden="true" /> {HOSPITAL.emergency}
+          </a>
+          <Link
+            to="/gallery"
+            onClick={onNavigate}
+            className="mt-auto inline-flex items-center gap-1.5 pt-4 text-sm font-semibold text-white hover:underline"
+          >
+            Virtual Hospital Tour <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
+        </aside>
+      </div>
+    );
+  }
+
   if (menu === "departments") {
     return (
-      <aside className="rounded-2xl bg-gradient-to-br from-emerald-50 to-cyan-50 p-5 dark:from-emerald-950/50 dark:to-cyan-950/40">
-        <span className="grid h-10 w-10 place-items-center rounded-xl bg-white text-emerald-700 shadow-sm dark:bg-slate-900 dark:text-emerald-300">
-          <Stethoscope className="h-5 w-5" aria-hidden="true" />
-        </span>
-        <h3 className="mt-4 font-display text-lg font-semibold">Care across specialties</h3>
-        <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-          Find the right clinical team for your care, from everyday concerns to specialist
-          treatment.
-        </p>
-        <Link
-          to="/departments"
-          onClick={onNavigate}
-          className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
-        >
-          Explore departments <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-        </Link>
-      </aside>
+      <>
+        <p className="mb-3 text-xs font-bold uppercase text-emerald-700">Find a specialist</p>
+        <div className="grid gap-1 sm:grid-cols-2">
+          {DEPARTMENT_MENU_LINKS.map((label) => (
+            <Link
+              key={label}
+              to="/departments"
+              onClick={onNavigate}
+              className="group flex items-center justify-between gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-emerald-50 hover:text-emerald-800 focus-visible:bg-emerald-50"
+            >
+              {label}
+              <ArrowUpRight className="h-4 w-4 shrink-0 text-emerald-700 opacity-0 transition-opacity group-hover:opacity-100" aria-hidden="true" />
+            </Link>
+          ))}
+        </div>
+        <div className="mt-4 border-t border-emerald-100 pt-3">
+          <Link
+            to="/departments"
+            onClick={onNavigate}
+            className="inline-flex items-center gap-1.5 text-sm font-bold text-emerald-800 hover:underline"
+          >
+            View All 15+ Specialities <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
+        </div>
+      </>
     );
   }
 
   return (
-    <aside className="rounded-2xl bg-gradient-to-br from-emerald-50 to-cyan-50 p-5 dark:from-emerald-950/50 dark:to-cyan-950/40">
-      <span className="grid h-10 w-10 place-items-center rounded-xl bg-white text-emerald-700 shadow-sm dark:bg-slate-900 dark:text-emerald-300">
-        <Clock3 className="h-5 w-5" aria-hidden="true" />
-      </span>
-      <h3 className="mt-4 font-display text-lg font-semibold">Plan your visit</h3>
-      <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{HOSPITAL.hours}</p>
-      <Link
-        to="/contact"
-        onClick={onNavigate}
-        className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
-      >
-        Book an appointment <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-      </Link>
-      <Link
-        to="/ayushman-bharat"
-        onClick={onNavigate}
-        className="mt-2 flex items-center gap-1.5 text-sm font-semibold text-foreground/80 hover:text-primary"
-      >
-        <ShieldCheck className="h-4 w-4" aria-hidden="true" /> Ayushman Bharat information
-      </Link>
-    </aside>
+    <div className="grid gap-5 sm:grid-cols-2">
+      {SERVICE_MENU_GROUPS.map((group) => (
+        <section key={group.title}>
+          <h3 className="mb-2 px-2 text-xs font-bold uppercase text-emerald-700">{group.title}</h3>
+          <div className="space-y-1">
+            {group.links.map((label) => (
+              <Link
+                key={label}
+                to={label.startsWith("Ayushman") ? "/ayushman-bharat" : group.to}
+                onClick={onNavigate}
+                className="flex items-start gap-2 rounded-lg px-2 py-2 text-sm font-medium leading-snug text-foreground transition-colors hover:bg-emerald-50 hover:text-emerald-800 focus-visible:bg-emerald-50"
+              >
+                <ArrowUpRight className="mt-0.5 h-4 w-4 shrink-0 text-emerald-700" aria-hidden="true" />
+                {label}
+              </Link>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
   );
 }
 
@@ -281,7 +375,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeMenu, setActiveMenu] = useState<MenuKey | null>(null);
-  const [mobileExpanded, setMobileExpanded] = useState<MenuKey | null>(null);
+  const [mobileExpanded, setMobileExpanded] = useState<MobileMenuKey | null>(null);
   const navRef = useRef<HTMLElement>(null);
   const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -290,9 +384,9 @@ export function Navbar() {
     hoverTimer.current = null;
   };
 
-  const openMenuSoon = (menu: MenuKey) => {
+  const activateMenu = (menu: MenuKey) => {
     clearHoverTimer();
-    hoverTimer.current = setTimeout(() => setActiveMenu(menu), 150);
+    setActiveMenu(menu);
   };
 
   const closeMenuSoon = () => {
@@ -303,11 +397,6 @@ export function Navbar() {
   const closeMenus = () => {
     clearHoverTimer();
     setActiveMenu(null);
-  };
-
-  const toggleMenu = (menu: MenuKey) => {
-    clearHoverTimer();
-    setActiveMenu((current) => (current === menu ? null : menu));
   };
 
   useEffect(() => {
@@ -347,7 +436,13 @@ export function Navbar() {
 
   const renderDesktopLink = (link: (typeof NAV_LINKS)[number]) => {
     const menu =
-      link.label === "Departments" ? "departments" : link.label === "Services" ? "services" : null;
+      link.label === "About"
+        ? "about"
+        : link.label === "Departments"
+          ? "departments"
+          : link.label === "Services"
+            ? "services"
+            : null;
     if (menu) {
       return (
         <button
@@ -355,9 +450,9 @@ export function Navbar() {
           aria-haspopup="true"
           aria-expanded={activeMenu === menu}
           aria-controls={`${menu}-mega-menu`}
-          onPointerEnter={() => openMenuSoon(menu)}
-          onFocus={() => openMenuSoon(menu)}
-          onClick={() => toggleMenu(menu)}
+          onPointerEnter={() => activateMenu(menu)}
+          onFocus={() => activateMenu(menu)}
+          onClick={() => activateMenu(menu)}
           className="link-underline inline-flex items-center gap-1 text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
         >
           {link.label}
@@ -373,6 +468,8 @@ export function Navbar() {
       <Link
         to={link.to}
         activeOptions={{ exact: link.to === "/" }}
+        onPointerEnter={closeMenus}
+        onFocus={closeMenus}
         className="link-underline text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
         activeProps={{ className: "text-primary font-semibold" }}
       >
@@ -445,25 +542,13 @@ export function Navbar() {
   };
 
   return (
-    <header className={`sticky top-0 z-40 transition-shadow ${scrolled ? "shadow-soft" : ""}`}>
+    <header className={`sticky top-0 z-50 transition-shadow ${scrolled ? "shadow-soft" : ""}`}>
       <nav
         ref={navRef}
         className="glass relative"
         aria-label="Main navigation"
         onPointerEnter={clearHoverTimer}
         onPointerLeave={closeMenuSoon}
-        onFocusCapture={(event) => {
-          if (
-            event.target instanceof HTMLButtonElement &&
-            event.target.getAttribute("aria-haspopup") === "true"
-          ) {
-            openMenuSoon(
-              event.target.getAttribute("aria-controls") === "departments-mega-menu"
-                ? "departments"
-                : "services",
-            );
-          }
-        }}
         onBlurCapture={(event) => {
           if (!event.currentTarget.contains(event.relatedTarget as Node | null)) closeMenuSoon();
         }}
@@ -484,7 +569,7 @@ export function Navbar() {
           </Link>
 
           <div className="flex shrink-0 items-center gap-2">
-            <ul className="hidden items-center gap-5 xl:flex">
+            <ul className="hidden items-center gap-5 lg:flex">
               {NAV_LINKS.map((link) => (
                 <Fragment key={link.to}>
                   <li>{renderDesktopLink(link)}</li>
@@ -508,7 +593,7 @@ export function Navbar() {
               }}
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
-              className="grid h-10 w-10 place-items-center rounded-full border border-border bg-card xl:hidden"
+              className="grid h-10 w-10 place-items-center rounded-full border border-border bg-card lg:hidden"
             >
               {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
@@ -518,50 +603,23 @@ export function Navbar() {
         <AnimatePresence>
           {activeMenu && (
             <motion.div
-              key={activeMenu}
               id={`${activeMenu}-mega-menu`}
-              initial={{ opacity: 0, y: 8 }}
+              layout="size"
+              initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 8 }}
-              transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute inset-x-0 top-full hidden border-t border-slate-100 bg-card shadow-soft xl:block"
+              exit={{ opacity: 0, y: 6 }}
+              transition={{ duration: 0.18, ease: "easeOut" }}
+              className="absolute left-1/2 top-full z-50 hidden w-[52vw] max-w-[720px] -translate-x-1/2 pt-4 lg:block"
             >
-              <div className="container-x py-6">
-                <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_17rem]">
-                  <div>
-                    <p className="text-xs font-bold uppercase text-primary">
-                      {activeMenu === "departments" ? "Find a specialist" : "Care and diagnostics"}
-                    </p>
-                    <h2 className="mt-1 font-display text-xl font-semibold">
-                      {activeMenu === "departments"
-                        ? "Departments & Specialties"
-                        : "Services & Diagnostics"}
-                    </h2>
-                    <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
-                      {activeMenu === "departments"
-                        ? "Explore coordinated medical, surgical and superspecialty care at Smart City Hospital."
-                        : "Access diagnostic imaging, emergency support and essential hospital services in one place."}
-                    </p>
-                    <div className="mt-4">
-                      <MenuGroups
-                        groups={activeMenu === "departments" ? DEPARTMENT_GROUPS : SERVICE_GROUPS}
-                        onNavigate={navigateFromMenu}
-                      />
-                    </div>
-                  </div>
-                  <MenuAside menu={activeMenu} onNavigate={navigateFromMenu} />
-                </div>
-                {activeMenu === "services" && (
-                  <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-slate-100 pt-4 text-sm">
-                    <a
-                      href={`tel:${HOSPITAL.emergency.replace(/\s/g, "")}`}
-                      className="inline-flex items-center gap-2 font-semibold text-rose-700 hover:underline"
-                    >
-                      <Siren className="h-4 w-4" aria-hidden="true" /> Emergency:{" "}
-                      {HOSPITAL.emergency}
-                    </a>
-                  </div>
-                )}
+              <div className="before:absolute before:-top-4 before:left-0 before:h-4 before:w-full before:content-[''] relative rounded-2xl border border-slate-100 bg-white/95 p-6 shadow-xl shadow-slate-900/10 backdrop-blur-md">
+                <motion.div
+                  key={activeMenu}
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.18, ease: "easeOut" }}
+                >
+                  <MegaMenuContent menu={activeMenu} onNavigate={navigateFromMenu} />
+                </motion.div>
               </div>
             </motion.div>
           )}
@@ -574,7 +632,7 @@ export function Navbar() {
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="max-h-[calc(100dvh-4.5rem)] overflow-y-auto overscroll-contain border-t border-border bg-card/95 xl:hidden"
+              className="max-h-[calc(100dvh-4.5rem)] overflow-y-auto overscroll-contain border-t border-border bg-card/95 lg:hidden"
             >
               <ul className="container-x flex min-h-0 flex-col py-2 pb-8">
                 {NAV_LINKS.map((link) => (

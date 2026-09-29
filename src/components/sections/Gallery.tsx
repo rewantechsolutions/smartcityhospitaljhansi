@@ -1,25 +1,51 @@
 import { AnimatePresence, motion } from "motion/react";
 import { X } from "lucide-react";
 import { useState } from "react";
-import icuBlock from "@/assets/smart-city-client/smart-city-hospital-02.webp";
-import laboratory from "@/assets/smart-city-client/smart-city-hospital-13.webp";
-import ultrasound from "@/assets/smart-city-client/smart-city-hospital-15.webp";
-import xray from "@/assets/smart-city-client/smart-city-hospital-16.webp";
-import ward from "@/assets/smart-city-client/smart-city-hospital-18.webp";
-import consultation from "@/assets/smart-city-client/smart-city-hospital-19.webp";
+import img01 from "@/assets/smart-city-client/smart-city-hospital-01.webp";
+import img02 from "@/assets/smart-city-client/smart-city-hospital-02.webp";
+import img03 from "@/assets/smart-city-client/smart-city-hospital-03.webp";
+import img04 from "@/assets/smart-city-client/smart-city-hospital-04.webp";
+import img05 from "@/assets/smart-city-client/smart-city-hospital-05.webp";
+import img06 from "@/assets/smart-city-client/smart-city-hospital-06.webp";
+import img07 from "@/assets/smart-city-client/smart-city-hospital-07.webp";
+import img08 from "@/assets/smart-city-client/smart-city-hospital-08.webp";
+import img09 from "@/assets/smart-city-client/smart-city-hospital-09.webp";
+import img10 from "@/assets/smart-city-client/smart-city-hospital-10.webp";
+import img11 from "@/assets/smart-city-client/smart-city-hospital-11.webp";
+import img12 from "@/assets/smart-city-client/smart-city-hospital-12.webp";
+import img13 from "@/assets/smart-city-client/smart-city-hospital-13.webp";
+import img14 from "@/assets/smart-city-client/smart-city-hospital-14.webp";
+import img15 from "@/assets/smart-city-client/smart-city-hospital-15.webp";
+import img16 from "@/assets/smart-city-client/smart-city-hospital-16.webp";
+import img17 from "@/assets/smart-city-client/smart-city-hospital-17.webp";
+import img18 from "@/assets/smart-city-client/smart-city-hospital-18.webp";
+import img19 from "@/assets/smart-city-client/smart-city-hospital-19.webp";
 import { Reveal } from "@/components/site/motion-primitives";
 import { SectionHeading } from "./Common";
 
 const ITEMS = [
-  { src: icuBlock, cat: "Hospital Facilities", alt: "Smart City Hospital ICU block", span: "sm:row-span-2" },
-  { src: laboratory, cat: "Diagnostics", alt: "Smart City Hospital diagnostic laboratory", span: "" },
-  { src: ultrasound, cat: "Diagnostics", alt: "Ultrasound equipment at Smart City Hospital", span: "" },
-  { src: xray, cat: "Equipment", alt: "X-ray facility at Smart City Hospital", span: "sm:row-span-2" },
-  { src: consultation, cat: "Doctors", alt: "Clinical consultation at Smart City Hospital", span: "" },
-  { src: ward, cat: "Hospital Facilities", alt: "Patient care ward at Smart City Hospital", span: "" },
+  { src: img03, cat: "Critical Care", alt: "Advanced ICU patient-care area at Smart City Hospital", span: "sm:row-span-2" },
+  { src: img04, cat: "Critical Care", alt: "Monitored ICU beds at Smart City Hospital", span: "" },
+  { src: img05, cat: "Critical Care", alt: "Smart City Hospital critical-care ward", span: "" },
+  { src: img06, cat: "Critical Care", alt: "Clinical team working inside the ICU", span: "" },
+  { src: img07, cat: "Critical Care", alt: "Doctors and nursing staff in the ICU", span: "" },
+  { src: img08, cat: "Doctors & Team", alt: "Clinical discussion at the ICU nursing station", span: "" },
+  { src: img09, cat: "Doctors & Team", alt: "Smart City Hospital doctors and nursing team", span: "sm:row-span-2" },
+  { src: img10, cat: "Doctors & Team", alt: "Doctors at the Smart City Hospital care desk", span: "" },
+  { src: img19, cat: "Consultation", alt: "Doctor consultation room at Smart City Hospital", span: "" },
+  { src: img01, cat: "Patient Areas", alt: "Patient treatment area at Smart City Hospital", span: "" },
+  { src: img02, cat: "Patient Areas", alt: "Entrance to the Smart City Hospital ICU block", span: "" },
+  { src: img11, cat: "Patient Areas", alt: "Specialised patient-care room at Smart City Hospital", span: "" },
+  { src: img12, cat: "Patient Areas", alt: "Inpatient ward with monitored beds", span: "" },
+  { src: img17, cat: "Consultation", alt: "Clinical work and consultation room", span: "" },
+  { src: img18, cat: "Patient Areas", alt: "Patient treatment beds and privacy curtains", span: "" },
+  { src: img13, cat: "Diagnostics", alt: "Smart City Hospital clinical laboratory", span: "sm:row-span-2" },
+  { src: img14, cat: "Diagnostics", alt: "Ultrasound imaging equipment at Smart City Hospital", span: "" },
+  { src: img15, cat: "Diagnostics", alt: "Ultrasound examination and imaging facility", span: "" },
+  { src: img16, cat: "Diagnostics", alt: "Digital X-ray facility at Smart City Hospital", span: "" },
 ];
 
-const CATS = ["All", "Hospital Facilities", "Doctors", "Equipment", "Diagnostics"];
+const CATS = ["All", "Critical Care", "Doctors & Team", "Diagnostics", "Patient Areas", "Consultation"];
 
 export function GallerySection() {
   const [cat, setCat] = useState("All");
@@ -32,7 +58,7 @@ export function GallerySection() {
         <SectionHeading
           eyebrow="Gallery"
           title="Inside Smart City Hospital"
-          desc="Our campus, critical-care units and theatres — designed for safety, hygiene and calm."
+          desc="Real photographs of our critical-care areas, diagnostic facilities, clinical team and patient-care spaces."
         />
 
         <Reveal className="mt-8 flex flex-wrap justify-center gap-2">

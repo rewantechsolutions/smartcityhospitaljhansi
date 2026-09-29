@@ -17,7 +17,13 @@ import {
 } from "lucide-react";
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import building from "@/assets/hospital/main-night.png";
+import building from "@/assets/hospital/main-night.webp";
+import facilityIcu from "@/assets/smart-city-client/smart-city-hospital-03.webp";
+import facilityEmergency from "@/assets/smart-city-client/smart-city-hospital-12.webp";
+import facilityOt from "@/assets/smart-city-client/smart-city-hospital-01.webp";
+import facilityLab from "@/assets/smart-city-client/smart-city-hospital-13.webp";
+import facilityPharmacy from "@/assets/opening-ceremony/pharmacy-visit.jpeg";
+import facilityInpatient from "@/assets/smart-city-client/smart-city-hospital-18.webp";
 import inaugurationVideo from "@/assets/opening-ceremony/inauguration-video.mp4";
 import inaugurationPlaque from "@/assets/opening-ceremony/inauguration-plaque.jpeg";
 import ribbonCutting from "@/assets/opening-ceremony/ribbon-cutting.jpeg";
@@ -291,17 +297,23 @@ export function FacilitiesSection() {
           desc="Hospital facilities work together to support coordinated, patient-centered care."
         />
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {FACILITIES.map((f, i) => (
-            <Reveal key={f.name} delay={i * 0.05}>
-              <article className="card-premium h-full p-6">
-                <span className="grid h-12 w-12 place-items-center rounded-2xl bg-navy/10 text-navy dark:bg-cyan/15 dark:text-cyan">
-                  <Icon name={f.icon} />
-                </span>
-                <h3 className="mt-4 text-lg font-semibold">{f.name}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{f.desc}</p>
-              </article>
-            </Reveal>
-          ))}
+          {FACILITIES.map((f, i) => {
+            const images = [facilityIcu, facilityEmergency, facilityOt, facilityLab, facilityPharmacy, facilityInpatient];
+            return (
+              <Reveal key={f.name} delay={i * 0.05}>
+                <article className="card-premium h-full overflow-hidden">
+                  <img src={images[i]} alt={`${f.name} at Smart City Hospital`} loading="lazy" width={800} height={520} className="h-44 w-full object-cover" />
+                  <div className="p-6">
+                    <span className="grid h-12 w-12 place-items-center rounded-2xl bg-navy/10 text-navy dark:bg-cyan/15 dark:text-cyan">
+                      <Icon name={f.icon} />
+                    </span>
+                    <h3 className="mt-4 text-lg font-semibold">{f.name}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{f.desc}</p>
+                  </div>
+                </article>
+              </Reveal>
+            );
+          })}
         </div>
       </div>
     </section>
